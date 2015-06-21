@@ -1,0 +1,74 @@
+FORMAT: 1A
+
+# STS and FoundationAccount [Dev]
+
+# Group STS mock
+## PreAuth [/v1/oauth2/token]
+PreAuth response on STS request containing SWallet authentication scheme.
+### Request and Response [POST]
++ Response 200 (application/json)
+
+        {
+            "scope": "https://uri.paypal.com/services/identity/proxyclient https://uri.paypal.com/services/subscriptions https://api.paypal.com/v1/payments/.* https://uri.paypal.com/services/identity/credentialmanagement https://api.paypal.com/v1/vault/credit-card openid https://uri.paypal.com/services/invoicing https://api.paypal.com/v1/vault/credit-card/.*",
+            "access_token": "A01506FtzYrVysvxuS-EpGq2X692Opj86oK9uDpXa4pxcdY",
+            "token_type": "Bearer",
+            "app_id": "APP-5LW75608UK041945U",
+            "expires_in": 28800,
+            "supported_authn_schemes": [
+                "email_password",
+                "phone_pin",
+                "remember_me",
+                "fido",
+                "swallet"
+            ],
+            "id_token": "eyJhbGciOiJQQkVXaXRoTUQ1QW5kREVTIiwidHlwIjoiSldUIn0=.eyJzdWIiOiIiLCJwaG9uZSI6IjEgNDE1Nzg2Njc3MSIsImxzbiI6IlJleWVzIiwibG9jYWxlIjoiZW5fVVMiLCJpc3MiOiJodHRwczovL3d3dy5wYXlwYWwuY29tIiwiYXV0aF90aW1lIjoxNDEyMTY0Nzg3LCJuc24iOiJPbGl2ZXIgUmV5ZXMiLCJleHAiOjE0MTIxNjU2ODcsImltYWdlX3VybCI6Imh0dHAlM0ElMkYlMkZpLmViYXlpbWcuY29tJTJGMDAlMkZzJTJGTkRrMVdEUTVOUSUzRCUzRCUyRnolMkZsZ01BQU9Td1FJdFQ4UTR1JTJGJTI0XyIsIm5vbmNlIjoiMjAxNC0xMC0wMVQxMTo1OTo0N1pkS08zbHhvSm1TTTBiRHNha2dNd1l3IiwiZW1haWwiOiJvbHJleWVzQGViYXkuY29tIiwiZnNuIjoiT2xpdmVyIiwiYXVkIjoiQVY4aGRCQk04MHhsZ0tzRC1PYU9ReGVlSFhKbFpsYUN2WFdnVnB2VXFaTVRkVFh5OXBtZkVYdEUxbENxIn0=.F-yPHnqHaSn7gZNiC9hyqAEApBdMkjJeU9B5f-LeLOw"
+        }
+
+# Group FoundationAccount mock
+## Proxy Authorization [/v1/mwf/proxy-auth/token]
+### Request and Response [POST]
+<!--### Proxy authorization returning invalid id_token. [POST]-->
++ Response 401 (application/json)
+
+        {
+          "result": {
+            "code": "Unknown",
+            "kind": "RetryCancel",
+            "title": "Let’s Try That Again",
+            "message": "Please check your login details.",
+            "retryButton": "Log In",
+            "cancelButton": "Not Now",
+            "debugMessage": "STS returns an error: Invalid ID Token",
+            "objectType": "FailureMessage"
+          },
+          "metadata": {
+            "executionTimeMs": 268,
+            "correlationId": "f14161c7bb2a9",
+            "visitorId": "edc14245c59290e",
+            "locale": "en_US",
+            "objectType": "Metadata"
+          },
+          "objectType": "MwfResponse"
+        }
+
+## Strong ID Proxy UAT [/v1/mwf/proxy-auth/strong-id-token_for_proxy-user-access-token]
+### Proxy authorization using ID Token response on SWallet login. [POST]
++ Response 200 (application/json)
+
+        {
+          "result": {
+            "tokenType": "Bearer",
+            "tokenValue": "sdfasdfas-0M9qyUDdQ6liamU9MTMWEUigL4mEqkSZUuDLNvg",
+            "expires": "2014-10-07T06:23:46.608Z",
+            "objectType": "Token"
+          },
+          "metadata": {
+            "executionTimeMs": 842,
+            "correlationId": "b834916e7919c",
+            "visitorId": "edc14245c59290e",
+            "locale": "en_US",
+            "objectType": "Metadata"
+          },
+          "objectType": "MwfResponse"
+        }
+                
